@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.contenedor {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin: 8px 0 16px;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+
+.racha {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.racha-etiqueta {
+  margin: 0;
+  color: #9a3412;
+  font-size: 0.9rem;
+}
+
+.racha-valor {
+  margin: 4px 0;
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.racha-detalle {
+  margin: 0;
+  color: #9a3412;
+  font-size: 0.9rem;
+}
+
+.mejor-racha {
+  margin: 8px 0 0;
+  color: #9a3412;
+  font-size: 0.95rem;
+}
+
+.tarjeta {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+}
+
+button {
+  margin-top: 14px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:active {
+  background: #1d4ed8;
+}
+
+.error {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lista li {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lista .tema {
+  font-weight: 600;
+  margin: 0;
+}
+
+.lista .fecha {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.lista .min {
+  white-space: nowrap;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.lista .derecha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.lista .borrar {
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #ffffff;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.vacio {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+}
