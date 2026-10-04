@@ -37,6 +37,9 @@ Proyecto didáctico: código simple, entendible por alguien que empieza a progra
 - Semana = lunes a domingo en fecha local. Total semanal = suma de `minutos`
   con `inicioSemana <= fecha <= hoy`; las futuras no suman. Se recalcula,
   no se guarda.
+- Mes = mes natural en fecha local (prefijo `AAAA-MM` de `hoyLocal()`).
+  Días del mes = fechas distintas con sesión y `fecha <= hoy`. Se recalcula,
+  no se guarda.
 
 ## Forma de trabajar
 
@@ -54,6 +57,13 @@ porqué) y errores a evitar.
 dejarlo en la memoria.
 - No guardes nunca datos sensibles (claves, tokens, datos personales).
 
+## Comandos
+- Tests: `node --test`
+
+## Reglas
+- Lee `docs/constitution.md` y la spec activa (`specs/NNN-*/`) antes de tocar código. 
+
+
 ## Límites
 
 - ✅ Siempre: respetar las reglas de fechas y racha, mantener los textos en español.
@@ -63,7 +73,9 @@ dejarlo en la memoria.
 
 ## Verificación
 
-- No hay tests ni lint. Probar abriendo `index.html` en el navegador.
+- No hay tests automáticos. Después de cada cambio, verifica con el MCP de Chrome
+DevTools: abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la
+vista móvil. 
 - Para empezar de cero: DevTools → Application → Local Storage → borrar la clave
   `diario-estudio-sesiones`.
 

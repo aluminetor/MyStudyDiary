@@ -14,7 +14,10 @@ const numeroMejorRacha = document.getElementById("mejor-racha");
 const unidadMejorRacha = document.getElementById("mejor-racha-unidad");
 const numeroMinutosSemana = document.getElementById("minutos-semana");
 const rangoSemana = document.getElementById("rango-semana");
+const numeroDiasMes = document.getElementById("dias-mes");
+const unidadDiasMes = document.getElementById("dias-mes-unidad");
 const error = document.getElementById("error");
+const mapa = document.getElementById("heat-map");
 
 // Devuelve hoy en fecha local con formato "AAAA-MM-DD" (sin usar UTC)
 function hoyLocal() {
@@ -161,6 +164,45 @@ function mostrarMinutosSemana(sesiones) {
   rangoSemana.textContent = formatearDia(inicio) + " – " + formatearDia(fin);
 }
 
+// Calcula cuántos días distintos tienen sesión este mes natural (fecha local).
+// Varias sesiones el mismo día cuentan como un día. Las futuras no suman.
+function calcularDiasMes(sesiones) {
+  const hoy = hoyLocal();
+  const prefijoMes = hoy.slice(0, 7);
+  const dias = new Set();
+  for (const s of sesiones) {
+    if (s.fecha.slice(0, 7) === prefijoMes && s.fecha <= hoy) {
+      dias.add(s.fecha);
+    }
+  }
+  return dias.size;
+}
+
+// Muestra los días estudiados este mes
+function mostrarDiasMes(sesiones) {
+  const dias = calcularDiasMes(sesiones);
+  numeroDiasMes.textContent = dias;
+  if (dias === 1) {
+    unidadDiasMes.textContent = "día";
+  } else {
+    unidadDiasMes.textContent = "días";
+  }
+}
+
+// Muestra el mapa de calor de las últimas semanas (solo visual)
+function mostrarMapa(sesiones) {
+  const datos = buildHeatMap(sesiones, hoyLocal());
+  mapa.innerHTML = "";
+  for (const semana of datos.weeks) {
+    for (const dia of semana.days) {
+      const celda = document.createElement("div");
+      celda.className = "m-celda nivel-" + dia.level;
+      celda.setAttribute("aria-hidden", "true");
+      mapa.appendChild(celda);
+    }
+  }
+}
+
 // Elimina una sesión por su id y repinta todo
 function eliminarSesion(id) {
   const sesiones = cargarSesiones().filter(function (s) { return s.id !== id; });
@@ -168,6 +210,8 @@ function eliminarSesion(id) {
   mostrarRacha(sesiones);
   mostrarMejorRacha(sesiones);
   mostrarMinutosSemana(sesiones);
+  mostrarDiasMes(sesiones);
+  mostrarMapa(sesiones);
   mostrarSesiones(sesiones);
 }
 
@@ -282,6 +326,8 @@ form.addEventListener("submit", function (evento) {
   mostrarRacha(sesiones);
   mostrarMejorRacha(sesiones);
   mostrarMinutosSemana(sesiones);
+  mostrarDiasMes(sesiones);
+  mostrarMapa(sesiones);
   mostrarSesiones(sesiones);
 });
 
@@ -291,4 +337,6 @@ const iniciales = cargarSesiones();
 mostrarRacha(iniciales);
 mostrarMejorRacha(iniciales);
 mostrarMinutosSemana(iniciales);
+mostrarDiasMes(iniciales);
+mostrarMapa(iniciales);
 mostrarSesiones(iniciales);

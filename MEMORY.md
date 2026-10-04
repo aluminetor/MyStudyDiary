@@ -2,8 +2,11 @@
 Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo que ya no
 aporte.
 ## Estado actual
-- v1.3 funcionando: registrar y eliminar sesiones, racha actual, mejor racha,
-  total semanal con rango y lista.
+- v1.5 diseño cuaderno: cabecera alineada a la izquierda con filete verde,
+  racha en serif grande con subrayado marcador, stats en rejilla, lista con
+  lomo verde. Sin cambios de lógica ni de datos (mismos ids).
+- v1.4 funcionando: registrar y eliminar sesiones, racha actual, mejor racha,
+  total semanal con rango, días distintos estudiados este mes y lista.
 - Datos en localStorage, sin cambios de formato.
 ## Decisiones (y por qué)
 - Sin backend ni dependencias: cualquiera debe poder abrirlo con doble clic.
@@ -11,10 +14,14 @@ aporte.
 - Mejor racha y total semanal recalculados desde las sesiones (no guardados):
   evita migraciones y pérdida de datos.
 - Semana = lunes a domingo: estándar en España; rango visible junto al total.
+- Días del mes = mes natural en fecha local, con `Set` de fechas y recalculado:
+  simple, sin migraciones y coherente con mejor racha/semana.
 - Borrado con `confirm()` nativo y repintado total: simple y coherente con el código.
 ## Aprendizajes y errores a evitar
 - Comparar fechas `AAAA-MM-DD` como texto solo vale para ordenar/filtrar; para saber
 si son consecutivas hay que usar `moverDias()`.
+- Verificado en Chrome (file://, 2026-10-04): 3 sesiones seguidas -> racha 3,
+  mejor 3, semana 75 min, sin errores en consola. Captura en `captura-movil-375.png`.
 ## Próximos pasos
-- (vacío por ahora) 
+- Mapa de calor terminado (T1–T8): `logic.js` + tests 8/8 en verde, sección "Últimas 8 semanas" con leyenda, repintado al guardar/eliminar, verificado en Chrome sin errores y a 375 px. Captura en `captura-heatmap-375.png`.
 

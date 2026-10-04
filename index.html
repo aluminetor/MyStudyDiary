@@ -8,14 +8,41 @@
 </head>
 <body>
   <main class="contenedor">
-    <h1>Diario de Estudio</h1>
+    <header class="cabecera">
+      <h1>Diario de Estudio</h1>
+      <p class="subtitulo">Tu cuaderno de constancia, día a día.</p>
+    </header>
 
-    <section class="racha">
+    <section class="racha" aria-live="polite">
       <p class="racha-etiqueta">Racha actual</p>
-      <p class="racha-valor"><span id="racha">0</span> 🔥</p>
+      <p class="racha-valor"><span id="racha">0</span></p>
       <p class="racha-detalle" id="racha-detalle">días seguidos estudiando</p>
-      <p class="mejor-racha">Mejor racha: <span id="mejor-racha">0</span> <span id="mejor-racha-unidad">días</span> 🏆</p>
-      <p class="mejor-racha">Esta semana (<span id="rango-semana"></span>): <span id="minutos-semana">0</span> min ⏱️</p>
+      <dl class="racha-datos">
+        <div>
+          <dt>Mejor racha</dt>
+          <dd><span id="mejor-racha">0</span> <span id="mejor-racha-unidad">días</span></dd>
+        </div>
+        <div>
+          <dt>Esta semana <span class="rango" id="rango-semana"></span></dt>
+          <dd><span id="minutos-semana">0</span> min</dd>
+        </div>
+        <div>
+          <dt>Este mes</dt>
+          <dd><span id="dias-mes">0</span> <span id="dias-mes-unidad">días</span></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="tarjeta mapa">
+      <h2>Últimas 8 semanas</h2>
+      <div id="heat-map" class="mapa-rejilla" role="img" aria-label="Mapa de calor de las últimas 8 semanas"></div>
+      <ul class="leyenda" aria-label="Leyenda de intensidad">
+        <li><span class="muestra nivel-empty"></span>0</li>
+        <li><span class="muestra nivel-low"></span>1–15</li>
+        <li><span class="muestra nivel-medium"></span>16–30</li>
+        <li><span class="muestra nivel-high"></span>31–60</li>
+        <li><span class="muestra nivel-max"></span>61+</li>
+      </ul>
     </section>
 
     <section class="tarjeta">
@@ -43,6 +70,7 @@
     </section>
   </main>
 
+  <script src="logic.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
