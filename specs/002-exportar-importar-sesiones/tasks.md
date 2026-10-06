@@ -13,5 +13,5 @@ Orden estricto de dependencia. Una sola tarea cada vez: tests en rojo, código, 
   - Hecho cuando: con sesiones se descarga un JSON con todas y nombre con fecha local sin modificar lo guardado; sin sesiones muestra aviso en español y no descarga nada.
 - [x] **T6. Importar desde la interfaz con confirmación y guardado.** RF-3, RF-8, RF-9, RF-10, RF-11, RNF-1, RNF-3
   - Hecho cuando: un archivo válido muestra resumen de nuevas/omitidas y pide confirmación; al confirmar solo añade nuevas y muestra resumen final; al cancelar o ante rechazo no guarda nada y muestra el motivo en español.
-- [ ] **T7. Validación manual final en Chrome.** Criterios de finalización de la spec
+- [x] **T7. Validación manual final en Chrome.** Criterios de finalización de la spec (RF-1 a RF-11, RNF-1 a RNF-3)
   - Hecho cuando: con `file://` se verifican exportar, importar con duplicados, importar corrupto y cancelar, con consola sin errores y vista a 375 px utilizable.
