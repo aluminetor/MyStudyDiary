@@ -68,6 +68,16 @@
       <ul id="lista" class="lista"></ul>
       <p id="vacio" class="vacio">Todavía no hay sesiones. ¡Registra la primera!</p>
     </section>
+
+    <section class="tarjeta">
+      <h2>Copia de seguridad</h2>
+      <div class="copia-botones">
+        <button type="button" id="exportar">Exportar copia</button>
+        <button type="button" id="importar">Importar copia</button>
+      </div>
+      <input type="file" id="archivo" accept=".json,application/json" hidden>
+      <p class="vacio" id="mensaje-copia" aria-live="polite" hidden></p>
+    </section>
   </main>
 
   <script src="logic.js"></script>

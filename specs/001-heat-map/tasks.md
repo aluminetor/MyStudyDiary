@@ -18,3 +18,5 @@ Orden de dependencia: lógica y pruebas primero; interfaz después; cableado y v
   Hecho cuando: al abrir, registrar y eliminar, el mapa se recalcula con hoy local y se repinta sin errores ni pérdida de sesiones.
 - [x] T8 — Verificación final de cierre (todos los RF y RNF)
   Hecho cuando: pruebas en verde, registrar/eliminar actualizan el mapa, consola sin errores y 375 px sin desplazamiento horizontal.
+- [x] Cambio 001a — Mapa en 8 semanas naturales (RF-1)
+  Hecho cuando: `node --test` en verde con la última columna siempre en la semana actual (hoy dibujado) y la primera en el lunes de hace 7 semanas.

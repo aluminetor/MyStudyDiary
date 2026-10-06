@@ -18,6 +18,10 @@ const numeroDiasMes = document.getElementById("dias-mes");
 const unidadDiasMes = document.getElementById("dias-mes-unidad");
 const error = document.getElementById("error");
 const mapa = document.getElementById("heat-map");
+const botonExportar = document.getElementById("exportar");
+const botonImportar = document.getElementById("importar");
+const campoArchivo = document.getElementById("archivo");
+const mensajeCopia = document.getElementById("mensaje-copia");
 
 // Devuelve hoy en fecha local con formato "AAAA-MM-DD" (sin usar UTC)
 function hoyLocal() {
@@ -329,6 +333,92 @@ form.addEventListener("submit", function (evento) {
   mostrarDiasMes(sesiones);
   mostrarMapa(sesiones);
   mostrarSesiones(sesiones);
+});
+
+// Muestra un mensaje en la sección de copia de seguridad
+function mostrarMensajeCopia(mensaje) {
+  mensajeCopia.textContent = mensaje;
+  mensajeCopia.hidden = false;
+}
+
+// Descarga todas las sesiones en un archivo JSON sin modificar lo guardado
+function exportarCopia() {
+  const sesiones = cargarSesiones();
+  if (sesiones.length === 0) {
+    mostrarMensajeCopia("Todavía no tienes sesiones para exportar.");
+    return;
+  }
+  const contenido = JSON.stringify(sesiones);
+  const nombre = buildExportName(hoyLocal());
+  const enlace = document.createElement("a");
+  enlace.href = URL.createObjectURL(new Blob([contenido], { type: "application/json" }));
+  enlace.download = nombre;
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  mostrarMensajeCopia("Copia descargada con " + sesiones.length + " sesiones.");
+}
+
+botonExportar.addEventListener("click", exportarCopia);
+
+// Explica por qué se rechazó un archivo, sin tecnicismos
+function motivoRechazo(motivo) {
+  if (motivo === "too-large" || motivo === "too-many") {
+    return "El archivo es demasiado grande (límite 5 MB o 10.000 sesiones).";
+  }
+  if (motivo === "invalid-json") {
+    return "El archivo no se puede leer como copia válida.";
+  }
+  return "El archivo no contiene una lista de sesiones.";
+}
+
+// Importa una copia: valida todo sin guardar, pide confirmación y fusiona
+function importarCopia(archivo) {
+  const lector = new FileReader();
+  lector.onload = function () {
+    const texto = lector.result;
+    const leido = parseImportContent(texto, archivo.size);
+    if (!leido.ok) {
+      mostrarMensajeCopia(motivoRechazo(leido.reason) + " No se ha importado nada.");
+      campoArchivo.value = "";
+      return;
+    }
+    const validacion = validateImportList(leido.list);
+    if (!validacion.ok) {
+      mostrarMensajeCopia("La sesión número " + (validacion.index + 1) + " no es válida. No se ha importado nada.");
+      campoArchivo.value = "";
+      return;
+    }
+    const guardadas = cargarSesiones();
+    const calculo = mergeSessions(guardadas, validacion.list);
+    const resumen = "Se añadirán " + calculo.toAdd.length + " sesiones nuevas y se omitirán " + calculo.skipped + " duplicadas. ¿Continuar?";
+    if (!confirm(resumen)) {
+      mostrarMensajeCopia("Importación cancelada. No se ha guardado nada.");
+      campoArchivo.value = "";
+      return;
+    }
+    const fusionadas = guardadas.concat(calculo.toAdd);
+    guardarSesiones(fusionadas);
+    mostrarMensajeCopia("Importadas " + calculo.toAdd.length + " sesiones nuevas y omitidas " + calculo.skipped + " duplicadas.");
+    campoArchivo.value = "";
+    mostrarRacha(fusionadas);
+    mostrarMejorRacha(fusionadas);
+    mostrarMinutosSemana(fusionadas);
+    mostrarDiasMes(fusionadas);
+    mostrarMapa(fusionadas);
+    mostrarSesiones(fusionadas);
+  };
+  lector.readAsText(archivo);
+}
+
+botonImportar.addEventListener("click", function () {
+  campoArchivo.click();
+});
+
+campoArchivo.addEventListener("change", function () {
+  if (campoArchivo.files.length > 0) {
+    importarCopia(campoArchivo.files[0]);
+  }
 });
 
 // Al arrancar: fecha por defecto = hoy, y pinta datos guardados

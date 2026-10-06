@@ -23,5 +23,6 @@ si son consecutivas hay que usar `moverDias()`.
 - Verificado en Chrome (file://, 2026-10-04): 3 sesiones seguidas -> racha 3,
   mejor 3, semana 75 min, sin errores en consola. Captura en `captura-movil-375.png`.
 ## Próximos pasos
-- Mapa de calor terminado (T1–T8): `logic.js` + tests 8/8 en verde, sección "Últimas 8 semanas" con leyenda, repintado al guardar/eliminar, verificado en Chrome sin errores y a 375 px. Captura en `captura-heatmap-375.png`.
+- Cambio 001a aplicado (8 semanas naturales): spec, plan y tareas 001 actualizados; `node --test` 14/14 en verde.
+- T1 de spec 002 marcada (RF-1, RF-3, RF-4, RF-5). T2 marcada (RF-6). T3 marcada (RF-7, RF-11). T4 marcada (RF-1, RF-3, RNF-2). T5 marcada (RF-1, RF-2, RF-11, RNF-1). T6 marcada (RF-3, RF-8, RF-9, RF-10, RF-11, RNF-1, RNF-3): lectura sin guardar, rechazo con motivo, confirmación nativa, fusión y repintado; verificado en Chrome (válido, cancelar, corrupto, roto). Ajuste: id numérico aceptado (compatibilidad con guardados previos). `node --test` 25/25. Pendiente T7. No empezada.
 

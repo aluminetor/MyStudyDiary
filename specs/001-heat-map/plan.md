@@ -19,14 +19,14 @@
 - `dayMinutes(sessions, day, today)`: suma los minutos válidos de un día; devuelve 0 si el día es futuro, está fuera de la ventana o no hay sesiones válidas. Cubre RF-3, RF-4.
 - `levelForMinutes(minutes)`: traduce minutos al nivel exacto (vacío, suave, medio, fuerte, máximo). Cubre RF-2.
 - `windowDays(today)`: devuelve la lista ordenada de los 56 días desde hoy menos 55 hasta hoy. Cubre RF-1.
-- `buildHeatMap(sessions, today)`: devuelve las 8 columnas semanales con cada día, sus minutos y su nivel, ya ordenadas para pintar. Cubre RF-1…RF-4.
+- `buildHeatMap(sessions, today)`: devuelve las últimas 8 semanas naturales (lunes a domingo, la actual la última) con cada día, sus minutos y su nivel, ya ordenadas para pintar. Cubre RF-1…RF-4.
 
 ## Algoritmo del mapa (pseudocódigo)
 1. Tomar el día de referencia recibido como parámetro.
-2. Construir la lista de 56 días desde referencia menos 55 hasta referencia.
+2. Calcular el lunes de la semana actual y retroceder 7 semanas: inicio del mapa.
 3. Para cada día: si es posterior a referencia, minutos = 0; si no, sumar solo sesiones válidas de ese día dentro de la ventana.
 4. Convertir los minutos de cada día a su nivel según los umbrales fijos.
-5. Agrupar los días por su semana (lunes a domingo), de la semana más antigua a la actual, manteniendo el orden lunes arriba y domingo abajo.
+5. Agrupar los días por su semana natural (lunes a domingo), de la semana más antigua a la actual, manteniendo el orden lunes arriba y domingo abajo: exactamente 8 columnas.
 6. Devolver la estructura de columnas con día, minutos y nivel.
 
 ## Cómo se pinta en la interfaz
@@ -38,7 +38,7 @@
 
 ## Decisiones técnicas justificadas (y alternativa descartada)
 1. Lógica en fichero clásico separado, cargado con etiqueta de guion clásica y reutilizado por las pruebas sin empaquetado. Justificación: mantiene el doble clic y la testabilidad con `node --test`. Descartada: duplicar el cálculo en el fichero de interfaz, porque mezcla lógica e interfaz y viola el principio 3.
-2. Ventana calculada como 56 días móviles agrupados por semana, en vez de 8 semanas naturales. Justificación: es lo único compatible con "terminando hoy" de RF-1. Descartada: semanas naturales, porque la última no terminaría hoy.
+2. Cambio 001a: mapa en 8 semanas naturales (lunes a domingo, la actual la última) en vez de 56 días móviles. Justificación: 8 columnas + filas lunes–domingo + huecos futuros solo encajan con semanas naturales; "terminando hoy" se conserva porque hoy siempre está dibujado (en su semana actual). Descartada: ventana exacta de 56 días, porque con hoy no en domingo exige 9 columnas o filas no semanales.
 3. Sesiones no válidas ignoradas a nivel de suma diaria, sin migrar ni corregir datos guardados. Justificación: protege los datos del usuario y mantiene compatibilidad hacia atrás. Descartada: sanear el guardado, porque reescribiría sesiones del usuario.
 4. Leyenda con rangos numéricos visibles. Justificación: hace el mapa legible sin depender solo del color (RNF-2). Descartada: mapa solo con color, porque incumple RNF-2.
 
